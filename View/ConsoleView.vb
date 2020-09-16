@@ -8,6 +8,9 @@
 
     Public Shared Function ShowMainMenu(Optional ByVal ConsoleError As String = "") As Integer
         Console.Clear()
+
+        ShowHeader("Sistema de Registro Acadêmico")
+
         If ConsoleError <> String.Empty Then
             ShowError(ConsoleError)
             Console.WriteLine(String.Empty)
@@ -47,6 +50,32 @@
             ShowMainMenu("São aceitos somente números.")
         End If
     End Function
+
+    Public Shared Sub ShowHeader(ByVal Header As String)
+        Dim LineBuffer = String.Empty
+        LineBuffer += "+--"
+        LineBuffer += StrDup(Header.Length, "-")
+        LineBuffer += "--+"
+
+        Console.WriteLine(LineBuffer)
+        LineBuffer = String.Empty
+
+        LineBuffer += "|  "
+
+        Console.Write(LineBuffer)
+        Console.ForegroundColor = ConsoleColor.Blue
+        Console.Write(Header)
+        Console.ResetColor()
+
+        Console.WriteLine("  |")
+
+        LineBuffer = String.Empty
+        LineBuffer += "+--"
+        LineBuffer += StrDup(Header.Length, "-")
+        LineBuffer += "--+"
+
+        Console.WriteLine(LineBuffer & vbCrLf)
+    End Sub
 
     Public Shared Sub ShowTable(ByVal Header() As String, ByVal Data(,) As String)
         If Header.Length <> Data.GetLength(1) Then
