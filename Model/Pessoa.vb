@@ -2,6 +2,15 @@
     Private Nome As String
     Private Endereço As String
 
+    Public Sub New()
+
+    End Sub
+
+    Public Sub New(ByVal Nome As String, ByVal Endereço As String)
+        Me.Nome = Nome
+        Me.Endereço = Endereço
+    End Sub
+
     Public Function GetNome() As String
         Return Nome
     End Function

@@ -2,6 +2,20 @@
     Private RG As String
     Private DataDeNascimento As Date
 
+    Public Sub New()
+
+    End Sub
+
+    Public Sub New(ByVal RG As String)
+        Me.RG = RG
+    End Sub
+
+    Public Sub New(ByVal Nome As String, ByVal Endereço As String, ByVal RG As String, ByVal DataDeNascimento As Date)
+        MyBase.New(Nome, Endereço)
+        Me.RG = RG
+        Me.DataDeNascimento = DataDeNascimento
+    End Sub
+
     Public Function GetRG() As String
         Return RG
     End Function
