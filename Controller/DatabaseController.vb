@@ -12,8 +12,8 @@ Public Class DatabaseController
 
             DatabaseCreate &= "CREATE TABLE Cliente (Nome VARCHAR(128), Endereco VARCHAR(256), RG VARCHAR(16) PRIMARY KEY, DataDeNascimento TEXT);"
             DatabaseCreate &= "CREATE TABLE Produto (Codigo INTEGER PRIMARY KEY AUTOINCREMENT, Nome VARCHAR(128), Valor DECIMAL(10,2));"
-            DatabaseCreate &= "CREATE TABLE Venda (Numero INTEGER PRIMARY KEY AUTOINCREMENT, Data TEXT, RG_FK INTEGER);"
-            DatabaseCreate &= "CREATE TABLE ItemVenda (Codigo_FK INTEGER, Valor DECIMAL(10,2), Quantidade INTEGER);"
+            DatabaseCreate &= "CREATE TABLE Venda (Numero INTEGER PRIMARY KEY AUTOINCREMENT, Data TEXT, RG_FK INTEGER, FOREIGN KEY (RG_FK) REFERENCES Cliente (RG));"
+            DatabaseCreate &= "CREATE TABLE ItemVenda (ID INTEGER PRIMARY KEY AUTOINCREMENT, Codigo_FK INTEGER, Numero_FK INTEGER, Valor DECIMAL(10,2), Quantidade INTEGER, FOREIGN KEY (Codigo_FK) REFERENCES Produto (Codigo), FOREIGN KEY (Numero_FK) REFERENCES Venda (Numero_FK));"
 
             Dim Command As SQLiteCommand
             Dim Connection As SQLiteConnection = Connect()
@@ -39,7 +39,9 @@ Public Class DatabaseController
         Return Connection
     End Function
 
-    Protected Shared Function Disconnect(ByRef Connection As SQLiteConnection) As Boolean
-        Return IIf(Connection.State = ConnectionState.Closed, False, True)
-    End Function
+    Protected Shared Sub Disconnect(ByRef Connection As SQLiteConnection)
+        If Connection.State <> ConnectionState.Closed Then
+            Connection.Close()
+        End If
+    End Sub
 End Class

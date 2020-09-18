@@ -31,4 +31,8 @@
     Public Sub SetDataDeNascimento(ByVal DataDeNascimento)
         Me.DataDeNascimento = DataDeNascimento
     End Sub
+
+    Public Overrides Function ToString() As String
+        Return MyBase.ToString() + "; RG: " + RG + "; DataDeNascimento: " + DataDeNascimento.ToString("dd/mm/yyyy")
+    End Function
 End Class

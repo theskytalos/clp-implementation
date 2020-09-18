@@ -4,6 +4,21 @@
     Private Cliente As Cliente
     Private Itens As List(Of ItemVenda)
 
+    Public Sub New()
+
+    End Sub
+
+    Public Sub New(ByVal Número As Integer)
+        Me.Número = Número
+    End Sub
+
+    Public Sub New(ByVal Número As Integer, ByVal Data As Date, ByVal Cliente As Cliente, ByVal Itens As List(Of ItemVenda))
+        Me.Número = Número
+        Me.Data = Data
+        Me.Cliente = Cliente
+        Me.Itens = Itens
+    End Sub
+
     Public Function GetNúmero() As Integer
         Return Número
     End Function
@@ -44,5 +59,15 @@
         Next
 
         Return TotalCount
+    End Function
+
+    Public Overrides Function ToString() As String
+        Dim ItemVendaString As String = String.Empty
+
+        For Each Item In Itens
+            ItemVendaString &= vbTab & Item.ToString() & vbCrLf
+        Next
+
+        Return "Número: " + Número.ToString() + "; Data: " + Data.ToString("dd/mm/yyyy") + "; Cliente: " + Cliente.GetRG() + "; Total: R$" + Total().ToString() + "; Itens: " + vbCrLf + ItemVendaString
     End Function
 End Class
