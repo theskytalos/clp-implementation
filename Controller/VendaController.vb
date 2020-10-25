@@ -76,7 +76,7 @@ Public Class VendaController
         Dim ClienteDAO As New ClienteDAO()
 
         If IsNothing(VendaDAO.GetVenda(Venda)) Then
-            Throw New Exception("Não existe uma venda cadastrada com o Número '" + Venda.GetNúmero() + "'")
+            Throw New Exception("Não existe uma venda cadastrada com o Número '" + Número.ToString() + "'")
         End If
 
         If IsNothing(ClienteDAO.GetCliente(New Cliente(Integer.Parse(Cliente.Trim())))) Then
@@ -99,7 +99,7 @@ Public Class VendaController
         Dim VendaDAO As New VendaDAO()
 
         If IsNothing(VendaDAO.GetVenda(Venda)) Then
-            Throw New Exception("Não existe uma venda cadastrada com o Número '" + Venda.GetNúmero() + "'")
+            Throw New Exception("Não existe uma venda cadastrada com o Número '" + Número.ToString() + "'")
         End If
 
         Return VendaDAO.RemoveVenda(Venda)

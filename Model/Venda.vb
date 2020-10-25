@@ -65,7 +65,11 @@
         Dim ItemVendaString As String = String.Empty
 
         For Each Item In Itens
-            ItemVendaString &= vbTab & Item.ToString() & vbCrLf
+            If Item.Equals(Itens.Last()) Then
+                ItemVendaString &= vbTab & Item.ToString()
+            Else
+                ItemVendaString &= vbTab & Item.ToString() & vbCrLf
+            End If
         Next
 
         Return "Número: " + Número.ToString() + "; Data: " + Data.ToString("dd/mm/yyyy") + "; Cliente: " + Cliente.GetRG() + "; Total: R$" + Total().ToString() + "; Itens: " + vbCrLf + ItemVendaString

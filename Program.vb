@@ -10,9 +10,44 @@ Module Program
             Console.WriteLine(ex.Message)
         End Try
 
-        TestClient()
-        TestProduto()
-        TestVenda()
+        MainMenu()
+
+        'TestClient()
+        'TestProduto()
+        'TestVenda()
+    End Sub
+
+    Sub MainMenu(Optional ByVal Message As String = "")
+        Console.Clear()
+
+        If Not Message = String.Empty Then
+            Console.WriteLine(Message)
+            Console.WriteLine()
+        End If
+
+        Console.WriteLine("1. Cliente")
+        Console.WriteLine("2. Produto")
+        Console.WriteLine("3. Venda")
+        Console.WriteLine("4. Sair")
+        Console.WriteLine()
+
+        Console.Write(">> ")
+        Dim ConsoleInput = Console.ReadLine().Trim()
+
+        Select Case ConsoleInput
+            Case "1"
+                ClienteView.Menu()
+                MainMenu()
+            Case "2"
+                ProdutoView.Menu()
+                MainMenu()
+            Case "3"
+                VendaView.Menu()
+                MainMenu()
+            Case "4"
+            Case Else
+                MainMenu("Input Inválido")
+        End Select
     End Sub
 
     Sub TestClient()
