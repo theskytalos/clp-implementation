@@ -44,7 +44,7 @@ Public Class ProdutoController
             Throw New Exception("O Nome do produto não pode exceder os 128 caracteres.")
         End If
 
-        If Not IsNumeric(Nome.Trim()) Then
+        If IsNumeric(Nome.Trim()) Then
             Throw New Exception("O Nome do produto não pode ser composto apenas por números.")
         End If
 
@@ -59,8 +59,8 @@ Public Class ProdutoController
         Produto.SetNome(Nome.Trim())
         Produto.SetValor(Decimal.Parse(Valor.Trim()))
 
-        If IsNothing(ProdutoDAO.GetProduto(Produto)) Then
-            Throw New Exception("Não existe um produto cadastrado com o Código '" + Produto.GetCódigo().ToString() + "'")
+        If IsNothing(GetProduto(Código)) Then
+            Throw New Exception("Não existe um produto cadastrado com o Código '" + Código.ToString() + "'")
         End If
 
         Return ProdutoDAO.EditProduto(Produto)
@@ -74,8 +74,8 @@ Public Class ProdutoController
         Dim Produto As New Produto(Integer.Parse(Código.Trim()))
         Dim ProdutoDAO As New ProdutoDAO()
 
-        If IsNothing(ProdutoDAO.GetProduto(Produto)) Then
-            Throw New Exception("Não existe um produto cadastrado com o Código '" + Produto.GetCódigo().ToString() + "'")
+        If IsNothing(GetProduto(Código)) Then
+            Throw New Exception("Não existe um produto cadastrado com o Código '" + Código.ToString() + "'")
         End If
 
         Return ProdutoDAO.RemoveProduto(Produto)

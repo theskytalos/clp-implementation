@@ -43,8 +43,8 @@ Public Class ClienteController
         Cliente.SetRG(RG.Trim())
         Cliente.SetDataDeNascimento(Date.ParseExact(DataDeNascimento.Trim(), "dd/mm/yyyy", CultureInfo.InvariantCulture))
 
-        If Not IsNothing(ClienteDAO.GetCliente(Cliente)) Then
-            Throw New Exception("Já existe um cliente cadastrado com o RG '" + Cliente.GetRG() + "'")
+        If Not IsNothing(GetCliente(RG)) Then
+            Throw New Exception("Já existe um cliente cadastrado com o RG '" + RG + "'")
         End If
 
         Return ClienteDAO.CreateCliente(Cliente)
@@ -91,8 +91,8 @@ Public Class ClienteController
         Cliente.SetRG(RG.Trim())
         Cliente.SetDataDeNascimento(Date.ParseExact(DataDeNascimento.Trim(), "dd/mm/yyyy", CultureInfo.InvariantCulture))
 
-        If IsNothing(ClienteDAO.GetCliente(Cliente)) Then
-            Throw New Exception("Não existe um cliente cadastrado com o RG '" + Cliente.GetRG() + "'")
+        If IsNothing(GetCliente(RG)) Then
+            Throw New Exception("Não existe um cliente cadastrado com o RG '" + RG + "'")
         End If
 
         Return ClienteDAO.EditCliente(Cliente)

@@ -68,7 +68,65 @@ Public Class ProdutoView
     End Function
 
     Private Shared Function Edit(Optional ByVal Message As String = "") As String
-        Return "Não implementado."
+        Console.Clear()
+
+        If Not Message = String.Empty Then
+            Console.WriteLine(Message)
+            Console.WriteLine()
+        End If
+
+        Console.Write("Digite o código do produto: ")
+        Dim Código = Console.ReadLine()
+
+        Dim ProdutoController As New ProdutoController()
+        Dim Produto As Produto
+        Dim Nome As String = ""
+        Dim Valor As String = ""
+
+        Try
+            Produto = ProdutoController.GetProduto(Código)
+
+            If Produto Is Nothing Then
+                Return "Não existe um produto cadastrado com código '" + Código.ToString() + "'"
+            Else
+                Nome = Produto.GetNome()
+                Valor = Produto.GetValor().ToString()
+            End If
+        Catch ex As Exception
+            Edit(ex.Message)
+        End Try
+
+        Console.WriteLine("O que deseja editar?")
+        Console.WriteLine()
+        Console.WriteLine("1. Nome")
+        Console.WriteLine("2. Valor")
+        Console.WriteLine()
+
+        Console.Write(">> ")
+        Dim ConsoleInput = Console.ReadLine()
+
+        Select Case ConsoleInput
+            Case "1"
+                Console.Write("Digite o novo nome: ")
+                Nome = Console.ReadLine()
+            Case "2"
+                Console.Write("Digite o novo valor: ")
+                Valor = Console.ReadLine()
+            Case Else
+                Edit("Input inválido.")
+        End Select
+
+        Try
+            If ProdutoController.EditProduto(Código, Nome, Valor) Then
+                Return "Produto editado com sucesso."
+            Else
+                Return "Não foi possível editar o produto."
+            End If
+        Catch ex As Exception
+            Edit(ex.Message)
+        End Try
+
+        Return "Isso nunca vai ser printado."
     End Function
 
     Private Shared Function Remove(Optional ByVal Message As String = "") As String

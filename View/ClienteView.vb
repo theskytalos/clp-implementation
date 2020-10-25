@@ -75,7 +75,71 @@ Public Class ClienteView
         Return "Isso nunca vai ser printado."
     End Function
     Private Shared Function Edit(Optional ByVal Message As String = "") As String
-        Return "Não implementado"
+        Console.Clear()
+
+        If Not Message = String.Empty Then
+            Console.WriteLine(Message)
+            Console.WriteLine()
+        End If
+
+        Console.Write("Digite o RG do cliente: ")
+        Dim RG = Console.ReadLine()
+
+        Dim ClienteController As New ClienteController()
+        Dim Cliente As Cliente
+        Dim Nome As String = ""
+        Dim Endereço As String = ""
+        Dim DataDeNascimento As String = ""
+
+        Try
+            Cliente = ClienteController.GetCliente(RG)
+
+            If Cliente Is Nothing Then
+                Return "Não existe um cliente cadastrado com RG '" + RG + "'"
+            Else
+                Nome = Cliente.GetNome()
+                Endereço = Cliente.GetEndereço()
+                DataDeNascimento = Cliente.GetDataDeNascimento().ToString("dd/mm/yyyy")
+            End If
+        Catch ex As Exception
+            Edit(ex.Message)
+        End Try
+
+        Console.WriteLine("O que deseja editar?")
+        Console.WriteLine()
+        Console.WriteLine("1. Nome")
+        Console.WriteLine("2. Endereço")
+        Console.WriteLine("3. Data de Nascimento")
+        Console.WriteLine()
+
+        Console.Write(">> ")
+        Dim ConsoleInput = Console.ReadLine()
+
+        Select Case ConsoleInput
+            Case "1"
+                Console.Write("Digite o novo nome: ")
+                Nome = Console.ReadLine()
+            Case "2"
+                Console.Write("Digite o novo endereço: ")
+                Endereço = Console.ReadLine()
+            Case "3"
+                Console.Write("Digite a nova data de nascimento: ")
+                DataDeNascimento = Console.ReadLine()
+            Case Else
+                Edit("Input inválido.")
+        End Select
+
+        Try
+            If ClienteController.EditCliente(Nome, Endereço, RG, DataDeNascimento) Then
+                Return "Cliente editado com sucesso."
+            Else
+                Return "Não foi possível editar o cliente."
+            End If
+        Catch ex As Exception
+            Edit(ex.Message)
+        End Try
+
+        Return "Isso nunca vai ser printado."
     End Function
 
     Private Shared Function Remove(Optional ByVal Message As String = "") As String
