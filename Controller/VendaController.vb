@@ -73,21 +73,21 @@ Public Class VendaController
 
         Dim Venda As New Venda()
         Dim VendaDAO As New VendaDAO()
-        Dim ClienteDAO As New ClienteDAO()
+        Dim ClienteController As New ClienteController()
 
-        If IsNothing(VendaDAO.GetVenda(Venda)) Then
-            Throw New Exception("Não existe uma venda cadastrada com o Número '" + Número.ToString() + "'")
+        If IsNothing(ClienteController.GetCliente(Integer.Parse(Cliente.Trim()))) Then
+            Throw New Exception("Não existe um cliente com este RG.")
         End If
 
-        If IsNothing(ClienteDAO.GetCliente(New Cliente(Integer.Parse(Cliente.Trim())))) Then
-            Throw New Exception("Não existe um cliente com este RG.")
+        If IsNothing(GetVenda(Número)) Then
+            Throw New Exception("Não existe uma venda cadastrada com o Número '" + Número.ToString() + "'")
         End If
 
         Venda.SetNúmero(Integer.Parse(Número.Trim()))
         Venda.SetData(Date.ParseExact(Data.Trim(), "dd/mm/yyyy", CultureInfo.InvariantCulture))
         Venda.SetCliente(New Cliente(Integer.Parse(Cliente.Trim())))
 
-        Return VendaDAO.CreateVenda(Venda)
+        Return VendaDAO.EditVenda(Venda)
     End Function
 
     Public Function RemoveVenda(ByVal Número As String) As Boolean

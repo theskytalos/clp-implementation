@@ -79,7 +79,77 @@ Public Class VendaView
     End Function
 
     Private Shared Function Edit(Optional ByVal Message As String = "") As String
-        Return "Não implementado."
+        Console.Clear()
+
+        If Not Message = String.Empty Then
+            Console.WriteLine(Message)
+            Console.WriteLine()
+        End If
+
+        Console.Write("Insira o número da venda: ")
+        Dim Número = Console.ReadLine()
+
+        Dim VendaController As New VendaController()
+        Dim ClienteController As New ClienteController()
+        Dim Venda As Venda
+        Dim ClienteRG As String = ""
+        Dim Data As Date
+
+        Try
+            Venda = VendaController.GetVenda(Número)
+
+            If Venda Is Nothing Then
+                Return "Não existe uma venda cadastrada com número '" + Número.ToString() + "'"
+            Else
+                ClienteRG = Venda.GetCliente().GetRG()
+                Data = Venda.GetData()
+            End If
+        Catch ex As Exception
+            Edit(ex.Message)
+        End Try
+
+        Console.WriteLine("O que deseja editar?")
+        Console.WriteLine()
+        Console.WriteLine("1. Data")
+        Console.WriteLine("2. Cliente")
+        Console.WriteLine("3. Itens")
+        Console.WriteLine()
+
+        Console.Write(">> ")
+        Dim ConsoleInput = Console.ReadLine()
+
+        Select Case ConsoleInput
+            Case "1"
+                Console.Write("Digite o nova data: ")
+                Data = Console.ReadLine()
+            Case "2"
+                Console.Write("Digite o RG do novo cliente: ")
+                ClienteRG = Console.ReadLine()
+
+                Try
+                    If ClienteController.GetCliente(ClienteRG) Is Nothing Then
+                        Edit("Não existe um cliente cadastrado com este RG.")
+                    End If
+                Catch ex As Exception
+                    Edit(ex.Message)
+                End Try
+            Case "3"
+                Console.Write("E agora? kkkk")
+            Case Else
+                Edit("Input inválido.")
+        End Select
+
+        Try
+            If VendaController.EditVenda(Número, Data, ClienteRG) Then
+                Return "Venda editada com sucesso."
+            Else
+                Return "Não foi possível editar a venda."
+            End If
+        Catch ex As Exception
+            Edit(ex.Message)
+        End Try
+
+        Return "Isso nunca vai ser printado."
     End Function
 
     Private Shared Function Remove(Optional ByVal Message As String = "") As String
@@ -155,7 +225,7 @@ Public Class VendaView
             Else
                 Dim SB As New StringBuilder()
                 For Each Venda In Vendas
-                    SB.Append(Venda.ToString())
+                    SB.Append(Venda.ToString()).Append(vbCrLf)
                 Next
                 Return SB.ToString()
             End If

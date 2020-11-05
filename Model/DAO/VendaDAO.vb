@@ -43,7 +43,7 @@ Public Class VendaDAO : Inherits DatabaseController
         Dim Command As SQLiteCommand = Connection.CreateCommand()
 
         Command.CommandText = "UPDATE Venda SET Data = @data, RG_FK = @rg WHERE Numero = @numero;"
-        Command.Parameters.AddWithValue("@data", Venda.GetData())
+        Command.Parameters.AddWithValue("@data", Venda.GetData().ToString("dd/mm/yyyy"))
         Command.Parameters.AddWithValue("@rg", Venda.GetCliente().GetRG())
         Command.Parameters.AddWithValue("@numero", Venda.GetNúmero())
 
