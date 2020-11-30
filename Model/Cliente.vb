@@ -3,7 +3,7 @@
     Private DataDeNascimento As Date
 
     Public Sub New()
-
+        MyBase.New()
     End Sub
 
     Public Sub New(ByVal RG As String)

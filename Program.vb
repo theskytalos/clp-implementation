@@ -1,6 +1,7 @@
 Module Program
+
     Sub Main(args As String())
-        Console.Title = "Implementação Trabalho de CLP"
+        Console.Title = "Parte 2 Trabalho de CLP - Implementação"
 
         Dim DatabaseController As New DatabaseController
 

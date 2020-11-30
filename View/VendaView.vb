@@ -112,7 +112,6 @@ Public Class VendaView
         Console.WriteLine()
         Console.WriteLine("1. Data")
         Console.WriteLine("2. Cliente")
-        Console.WriteLine("3. Itens")
         Console.WriteLine()
 
         Console.Write(">> ")
@@ -133,8 +132,6 @@ Public Class VendaView
                 Catch ex As Exception
                     Edit(ex.Message)
                 End Try
-            Case "3"
-                Console.Write("E agora? kkkk")
             Case Else
                 Edit("Input inválido.")
         End Select
